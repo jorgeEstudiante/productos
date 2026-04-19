@@ -15,29 +15,28 @@ public class ProductoService {
     @Autowired
     private ProductoRepository vRepository;
 
-    public ProductoDTO pProducto(@Valid ProductoRequest v) {
-        ProductoModel u = new ProductoModel();
-        u.setNombre(v.getNombre());
-        u.setPrecio(v.getPrecio());
-        u.setStock(v.getStock());
-        ProductoModel guardado = vRepository.save(u);
-        return convertirADTO(guardado);
+    public String postProducto(@Valid ProductoModel v) {
+        vRepository.save(v);
+        convertirADTO(v);
+        return "producto creado";
     }
 
     private ProductoDTO convertirADTO(ProductoModel v) {
         ProductoDTO dto = new ProductoDTO();
-        dto.setNombre(v.getNombre());
-        dto.setEdad(v.getEdad());
-        dto.setFechaNacimiento(v.getFechaNacimiento());
-        dto.setPeso(v.getPeso());
+
+        dto.setId(v.getId());
+        dto.setPrecio(v.getPrecio());
+        dto.setStock(v.getStock());
         return dto;
     }
 
-    public List<ProductoModel> gProducto() {
-        return vRepository.findAll();
+    public List<ProductoDTO> getProductos() {
+        return vRepository.findAll()
+                .stream().map(this::convertirADTO)
+                .toList();
     }
 
-    public ProductoDTO gxProducto(Integer id) {
+    public ProductoDTO getxProducto(Integer id) {
         return vRepository.findById(id)
                 .map(this::convertirADTO)
                 .orElse(null);

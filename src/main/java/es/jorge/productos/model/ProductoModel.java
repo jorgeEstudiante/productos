@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class ProductoModel {
     @Id//marca el campo como llave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY)//la base de datos se encarga de 1, 2, 3...
-    private Long id;
+    private Integer id;
 
     private String nombre;
     private Double precio;

@@ -1,5 +1,6 @@
 package es.jorge.productos.controller;
 
+import es.jorge.productos.dto.ProductoDTO;
 import es.jorge.productos.model.ProductoModel;
 import es.jorge.productos.service.ProductoService;
 import jakarta.validation.Valid;
@@ -18,18 +19,18 @@ public class ProductoController {
 
     //crud
     @PostMapping
-    public ResponseEntity<ProductoDTO> pProducto(@Valid @RequestBody ProductoRequest v){
+    public ResponseEntity<String> postProducto(@Valid @RequestBody ProductoModel v){
         try{
-            return ResponseEntity.status(201).body(vService.pProducto(v));
+            return ResponseEntity.status(201).body(vService.postProducto(v));
         }catch(Exception e){
             return new ResponseEntity("errorr al agregar Producto", HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductoModel>> gProducto(){
+    public ResponseEntity<List<ProductoDTO>> getProductos(){
         try{
-            return ResponseEntity.status(200).body(vService.gProducto());
+            return ResponseEntity.status(200).body(vService.getProductos());
         }catch(Exception e){
             return new ResponseEntity("errorr al listar Productos", HttpStatus.BAD_REQUEST);
         }
@@ -37,9 +38,9 @@ public class ProductoController {
 
 
     @GetMapping("{id}")
-    public ResponseEntity<ProductoDTO> gxProducto(@PathVariable Integer id){
+    public ResponseEntity<ProductoDTO> getxProducto(@PathVariable Integer id){
         try{
-            return ResponseEntity.status(200).body(vService.gxProducto(id));
+            return ResponseEntity.status(200).body(vService.getxProducto(id));
         }catch(Exception e){
             return new ResponseEntity("errorr al encontrar el Producto", HttpStatus.BAD_REQUEST);
         }
